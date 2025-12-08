@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { socials } from "@/data/socials";
-import { SiGithub, SiLinkedin, SiTwitter, SiCodepen, SiDribbble } from "react-icons/si";
+import { SiGithub, SiLinkedin, SiX, SiCodepen, SiDribbble } from "react-icons/si";
 
 const iconMap: Record<string, typeof SiGithub> = {
   github: SiGithub,
   linkedin: SiLinkedin,
-  twitter: SiTwitter,
+  twitter: SiX,
   codepen: SiCodepen,
   dribbble: SiDribbble,
 };

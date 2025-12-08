@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { SiGithub, SiLinkedin, SiTwitter, SiCodepen, SiDribbble } from "react-icons/si";
+import { SiGithub, SiLinkedin, SiX, SiCodepen, SiDribbble } from "react-icons/si";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +26,7 @@ import { profile } from "@/data/profile";
 const iconMap: Record<string, typeof SiGithub> = {
   github: SiGithub,
   linkedin: SiLinkedin,
-  twitter: SiTwitter,
+  twitter: SiX,
   codepen: SiCodepen,
   dribbble: SiDribbble,
 };
