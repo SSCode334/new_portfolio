@@ -1,0 +1,215 @@
+Here is a compact text prompt you can paste into Replit AI:
+
+---
+
+You are an expert Next.js + TypeScript + creative front-end engineer. Build a **personal portfolio website** for a single developer with the following exact requirements.
+
+1. TECH STACK
+
+* Next.js (latest, **App Router**) with **TypeScript**
+* **Tailwind CSS** for styling
+* **Framer Motion** for UI animations
+* **three.js** (prefer `@react-three/fiber` + `@react-three/drei`) for 3D
+* **barba.js** for page/route transitions
+* Basic contact form using React Hook Form (client-side validation only, just console.log on submit)
+* Setup ESLint + Prettier with standard React/Next rules
+
+2. THEME & STYLE (GEN-Z DARK RAVE)
+
+* Dark-only UI, no light mode
+* Background: near-black with subtle noise texture
+* Neon accent colors: electric purple, magenta, cyan, acid green
+* Use glowing outlines, gradients, and chromatic aberration-inspired effects
+* Typography: bold headline font + clean sans-serif for body
+* Overall feel: futuristic rave / cyberpunk club dashboard, but readable and not overdone
+
+3. ROUTES (APP ROUTER)
+   Use the App Router in `app/` with these pages:
+
+* `/` – Hero / Landing
+* `/about` – About & Skills
+* `/experience` – Work & Education timeline
+* `/projects` – Projects gallery (+ optional dynamic route `/projects/[slug]`)
+* `/playground` – Interactive / experimental page
+* `/contact` – Contact form + social links
+
+Include a **global layout** (`app/layout.tsx`) with:
+
+* Fixed top **navbar** (logo/monogram + links to all routes + “Let’s Talk” button to `/contact`)
+* Subtle footer (copyright + small note)
+* Global background + noise texture + rave theme styles
+
+4. DATA-DRIVEN CONTENT (CENTRALIZED, TYPED)
+   Create a `data/` folder with TypeScript data files and types. Dummy content but clearly marked placeholders like `YOUR_NAME`, `YOUR_TITLE`, etc.
+
+* `data/profile.ts`
+
+  ```ts
+  export type Profile = {
+    name: string;
+    tagline: string;
+    location: string;
+    shortBio: string;
+    profileImage: string; // path or URL
+  };
+  ```
+* `data/skills.ts`
+
+  ```ts
+  export type SkillGroup = {
+    category: string;
+    skills: { name: string; level: "beginner" | "intermediate" | "advanced" | "expert" }[];
+  };
+  ```
+* `data/experience.ts`
+
+  ```ts
+  export type ExperienceItem = {
+    type: "work" | "education";
+    roleOrDegree: string;
+    companyOrSchool: string;
+    location: string;
+    startDate: string;
+    endDate: string | "Present";
+    description: string;
+    technologies: string[];
+  };
+  ```
+* `data/projects.ts`
+
+  ```ts
+  export type Project = {
+    title: string;
+    slug: string;
+    shortDescription: string;
+    longDescription: string;
+    techStack: string[];
+    githubUrl?: string;
+    liveUrl?: string;
+    highlight: boolean;
+    thumbnail: string;
+  };
+  ```
+* `data/socials.ts`
+
+  ```ts
+  export type SocialLink = {
+    label: string;
+    url: string;
+    icon?: string; // name or id, can be used with an icon set
+  };
+  ```
+
+All pages must consume data from these files (no hardcoded profile/skills/experience/projects directly in components).
+
+5. LAYOUT & COMPONENT STRUCTURE
+   Use a clean folder structure like:
+
+* `app/` – routes and page-level components
+* `components/ui/` – buttons, cards, chips, etc.
+* `components/layout/` – navbar, footer, page transition overlay
+* `components/3d/` – all three.js / R3F scenes
+* `data/` – data files
+* `lib/` – helpers (e.g., barba.js integration, constants, theme tokens)
+
+Create reusable components:
+
+* Neon button (hover: glow + slight scale)
+* Card component (used for projects, experience items, etc.)
+* Section wrapper with animated heading and Framer Motion entrance
+* Tech badge / pill component with hover glow
+
+6. THREE.JS / 3D REQUIREMENTS
+
+* Hero 3D scene component (e.g. `HeroScene.tsx`) using R3F + drei:
+
+  * A simple rotating neon object (sphere/cube/abstract) with emissive material
+  * Subtle camera movement
+  * Ensure SSR safety by lazy-loading / client-only usage
+* Optional background particles or a simple animated grid in a separate, lightweight scene
+* Provide a graceful fallback (e.g., static gradient background) if WebGL is unavailable
+
+7. PAGE CONTENT & ANIMATIONS
+
+**`/` (Landing / Hero)**
+
+* Left:
+
+  * Large name (`YOUR_NAME`)
+  * Role/title (`YOUR_TITLE` like “Full-Stack Developer & Creative Coder”)
+  * 1–2 line pitch
+  * Primary CTA: View Projects (`/projects`)
+  * Secondary CTA: Contact Me (`/contact`)
+* Right or background: Hero 3D scene
+* Use Framer Motion to animate hero text + buttons on mount (staggered entrance).
+
+**`/about` (About & Skills)**
+
+* About section: short bio, what you do, interests, etc. (from `profile.ts`)
+* Skills section:
+
+  * Render groups from `skills.ts` using tabs or filters (“Frontend”, “Backend”, “Tools”, etc.)
+  * Visual representation: grid of glowing pills or simple skill bars with neon accent
+* Use scroll-based reveal animations for sections.
+
+**`/experience` (Work & Education Timeline)**
+
+* Vertical timeline separated into Work and Education (filter buttons or headers)
+* Each item from `experience.ts` rendered as a card attached to a neon line
+* Animate items in as user scrolls (staggered).
+
+**`/projects` (Projects Gallery)**
+
+* Grid of project cards using `projects.ts` data
+* Each card: thumbnail, title, short description, tech stack pills
+* Hover state: slight scale, increased glow, show actions (“View Details”, “GitHub”, “Live”)
+* Implement optional dynamic route `/projects/[slug]` to show long description, full tech stack, and links.
+
+**`/playground` (Interactive / Experimental)**
+
+* 1–3 small interactive visual demos (e.g., small 3D toy, shader-like pattern, or pointer-reactive canvas)
+* Keep performance acceptable and don’t block the whole app.
+
+**`/contact` (Contact Form + Socials)**
+
+* Contact form fields: name, email, message
+* Use React Hook Form + basic validation (required fields, simple email check)
+* On submit: `console.log` the data and show a “Message sent” success state (no backend).
+* Render social links from `socials.ts` as neon pills or icons with hover animation.
+
+8. ANIMATION & TRANSITION REQUIREMENTS
+
+Use **Framer Motion** for:
+
+* Page section entrances (fade+slide, with small stagger)
+* Hover/tap states on buttons, nav links, cards (scale, glow, slight rotation)
+* Scroll-triggered reveals for sections (e.g., skills, experience, projects)
+
+Use **barba.js** for:
+
+* Route transitions between pages:
+
+  * On navigation, play an **out** animation on current page (content fades/slides, overlay appears)
+  * Then play an **in** animation for the new page (overlay hides, content reveals)
+* Implement a full-screen transition overlay component in `components/layout` and coordinate it with Next.js router events.
+* Keep transitions short (~0.4–0.8s) and ensure it fails gracefully if JS is disabled or barba fails.
+
+9. RESPONSIVENESS & PERFORMANCE
+
+* Fully responsive (mobile, tablet, desktop):
+
+  * Stack sections vertically on mobile, split layout on larger screens.
+* Optimize:
+
+  * Lazy-load 3D components
+  * Use Tailwind utilities for spacing and layout
+  * Avoid unnecessary re-renders; keep three.js scenes as lightweight as possible
+
+10. CODE QUALITY
+
+* Strong TypeScript usage (avoid `any`)
+* No unused imports or dead code
+* Clean, modular components
+* Use constants for theme (colors, animation durations, easing) in a small config file in `lib/`.
+
+Deliver a complete, runnable Next.js + TypeScript project that matches all of the above: a **Gen-Z dark rave themed**, fully animated, 3D-enhanced, multi-page portfolio ready for me to customize by editing the `data/` files.
