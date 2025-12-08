@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { Link } from "wouter";
+import { ExternalLink, Github, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TechBadge } from "@/components/ui/tech-badge";
@@ -78,7 +79,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.shortDescription}
           </p>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-4">
             {project.techStack.slice(0, 4).map((tech, i) => (
               <TechBadge
                 key={tech}
@@ -92,6 +93,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               </span>
             )}
           </div>
+
+          <Link href={`/projects/${project.slug}`}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full justify-between text-muted-foreground hover:text-neon-cyan group/btn"
+              data-testid={`button-project-details-${project.slug}`}
+            >
+              View Details
+              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </motion.div>

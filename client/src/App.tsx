@@ -10,6 +10,7 @@ import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Experience from "@/pages/Experience";
 import Projects from "@/pages/Projects";
+import ProjectDetail from "@/pages/ProjectDetail";
 import Playground from "@/pages/Playground";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
@@ -22,6 +23,7 @@ function Router() {
         <Route path="/about" component={About} />
         <Route path="/experience" component={Experience} />
         <Route path="/projects" component={Projects} />
+        <Route path="/projects/:slug" component={ProjectDetail} />
         <Route path="/playground" component={Playground} />
         <Route path="/contact" component={Contact} />
         <Route component={NotFound} />
