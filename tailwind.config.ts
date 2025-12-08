@@ -11,6 +11,12 @@ export default {
         sm: ".1875rem", /* 3px */
       },
       colors: {
+        neon: {
+          purple: "hsl(var(--neon-purple) / <alpha-value>)",
+          magenta: "hsl(var(--neon-magenta) / <alpha-value>)",
+          cyan: "hsl(var(--neon-cyan) / <alpha-value>)",
+          green: "hsl(var(--neon-green) / <alpha-value>)",
+        },
         // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
@@ -96,10 +102,20 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
       },
     },
   },
