@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ButtonHTMLAttributes, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-interface NeonButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface NeonButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onDrag" | "onDragEnd" | "onDragStart" | "onAnimationStart" | "onAnimationEnd" | "onAnimationIteration"> {
   variant?: "purple" | "cyan" | "magenta" | "green";
   size?: "sm" | "md" | "lg";
 }
