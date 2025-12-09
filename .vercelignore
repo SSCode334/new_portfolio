@@ -1,0 +1,28 @@
+# Development files
+.replit
+replit.md
+design_guidelines.md
+attached_assets
+
+# Build artifacts (will be generated during build)
+dist
+
+# Dependencies (will be installed during build)
+node_modules
+
+# IDE files
+.vscode
+.idea
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files (should be set in Vercel dashboard)
+.env
+.env.local
+.env.*.local
+
