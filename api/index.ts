@@ -2,10 +2,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import path from 'path';
 import fs from 'fs';
+import { createRequire } from 'module';
 
 // Cache the app instance
 let app: any = null;
 let initialized = false;
+
+// Create require function for CJS modules
+const require = createRequire(import.meta.url);
 
 async function getApp() {
   if (app && initialized) return app;
@@ -14,19 +18,27 @@ async function getApp() {
     // Set NODE_ENV to production for Vercel
     process.env.NODE_ENV = 'production';
     
-    // Try to load from built server
+    // Try to load from built server (CJS format)
     const distPath = path.join(process.cwd(), 'dist', 'index.cjs');
     
     if (fs.existsSync(distPath)) {
-      // Clear require cache
-      delete require.cache[require.resolve(distPath)];
-      const serverModule = require(distPath);
-      
-      if (serverModule.app && serverModule.initializeApp) {
-        await serverModule.initializeApp();
-        app = serverModule.app;
-        initialized = true;
-        return app;
+      try {
+        // Clear require cache if module was already loaded
+        const resolvedPath = require.resolve(distPath);
+        if (require.cache[resolvedPath]) {
+          delete require.cache[resolvedPath];
+        }
+        
+        const serverModule = require(distPath);
+        
+        if (serverModule.app && serverModule.initializeApp) {
+          await serverModule.initializeApp();
+          app = serverModule.app;
+          initialized = true;
+          return app;
+        }
+      } catch (requireError: any) {
+        console.log('Require failed, trying dynamic import:', requireError.message);
       }
     }
     
