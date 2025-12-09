@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { HeroScene } from "@/components/3d/HeroScene";
 import { profile } from "@/data/profile";
+import lokiImage from "@/assets/loki.jpg";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -33,12 +34,13 @@ export default function Home() {
       <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-2xl"
-        >
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-2xl flex-1"
+          >
           <motion.div variants={itemVariants} className="mb-4">
             <span className="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium rounded-md border border-neon-cyan/30 bg-neon-cyan/10 text-neon-cyan">
               <Sparkles className="w-4 h-4" />
@@ -117,6 +119,23 @@ export default function Home() {
             </div>
           </motion.div>
         </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="flex-shrink-0"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-neon-purple/20 blur-3xl rounded-full animate-pulse" />
+              <img
+                src={lokiImage}
+                alt="Profile"
+                className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full object-cover border-4 border-neon-cyan/50 shadow-2xl shadow-neon-purple/50"
+              />
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       <motion.div
