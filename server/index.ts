@@ -59,7 +59,13 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
+// Initialize the app
+let appInitialized = false;
+
+async function initializeApp() {
+  if (appInitialized) return;
+  appInitialized = true;
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -79,28 +85,38 @@ app.use((req, res, next) => {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }
+}
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "5000", 10);
-  // Windows doesn't support reusePort, so use simpler listen syntax
-  const isWindows = process.platform === "win32";
-  if (isWindows) {
-    httpServer.listen(port, "0.0.0.0", () => {
-      log(`serving on port ${port}`);
-    });
-  } else {
-    httpServer.listen(
-      {
-        port,
-        host: "0.0.0.0",
-        reusePort: true,
-      },
-      () => {
+// Export the app and initialization function for Vercel serverless functions
+export { app, httpServer, initializeApp };
+
+// Only start the server if not in a serverless environment (Vercel sets VERCEL env var)
+if (!process.env.VERCEL) {
+  (async () => {
+    await initializeApp();
+
+    // ALWAYS serve the app on the port specified in the environment variable PORT
+    // Other ports are firewalled. Default to 5000 if not specified.
+    // this serves both the API and the client.
+    // It is the only port that is not firewalled.
+    const port = parseInt(process.env.PORT || "5000", 10);
+    // Windows doesn't support reusePort, so use simpler listen syntax
+    const isWindows = process.platform === "win32";
+    if (isWindows) {
+      httpServer.listen(port, "0.0.0.0", () => {
         log(`serving on port ${port}`);
-      },
-    );
-  }
-})();
+      });
+    } else {
+      httpServer.listen(
+        {
+          port,
+          host: "0.0.0.0",
+          reusePort: true,
+        },
+        () => {
+          log(`serving on port ${port}`);
+        },
+      );
+    }
+  })();
+}
